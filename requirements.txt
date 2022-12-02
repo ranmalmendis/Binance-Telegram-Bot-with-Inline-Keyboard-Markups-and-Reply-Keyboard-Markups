@@ -1,0 +1,5 @@
+requests
+python-binance
+matplotlib~=3.6.2
+pandas~=1.5.2
+aiogram~=2.23.1
