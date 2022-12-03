@@ -28,7 +28,7 @@ async def welcome(message: types.Message):
     await message.reply("Cancelled ", reply_markup=keyboard1)
 
 
-@dp.callback_query_handler(text=["randomvalue_of10", "randomvalue_of100", "id222","BTCUSDT","RAYUSDT","DUSKUSDT","SKLUSDT"])
+@dp.callback_query_handler(text=["id222","BTCUSDT","RAYUSDT","DUSKUSDT","SKLUSDT"])
 async def random_value(call: types.CallbackQuery):
     if call.data == "BTCUSDT":
         res=binance_functions.get_historical_klines(call.data)
