@@ -36,8 +36,18 @@ def get_historical_klines(coin):
 
     # To get the historical data in 5 min intervals
     klines = client.get_historical_klines(crypto, Client.KLINE_INTERVAL_30MINUTE, date_to_unix(datetime.datetime.now()))
-    df = pd.DataFrame(klines)
 
+    values = [[unix_to_datetime(el[0]), float(el[1])] for el in klines]
+    df = pd.DataFrame(values, columns=['ds', 'y'])
+    # plot the data and sending as an image via telegram
+    plt.plot(df['ds'], df['y'])
+    plt.xticks(rotation=15)
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    res.append(img)
+
+    df = pd.DataFrame(klines)
     df["Date"] = pd.to_datetime(df.iloc[:, 0], unit="ms")
     df.columns = ["Open Time", "Open", "High", "Low", "Close", "Volume",
                   "Clos Time", "Quote Asset Volume", "Number of Trades",
@@ -49,16 +59,6 @@ def get_historical_klines(coin):
 
     # calculating the changed percentage of a given symbol
     change = ((df['Close'] - df['Open']) / df['Open'])
-    change = change.sum() * 100
+    change = round(change.sum() * 100, 2)
     res.append(change)
-
-    values = [[unix_to_datetime(el[0]), float(el[1])] for el in klines]
-    df = pd.DataFrame(values, columns=['ds', 'y'])
-    # plot the data and sending as an image via telegram
-    plt.plot(df['ds'], df['y'])
-    plt.xticks(rotation=15)
-    img = io.BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
-    res.append(img)
     return res

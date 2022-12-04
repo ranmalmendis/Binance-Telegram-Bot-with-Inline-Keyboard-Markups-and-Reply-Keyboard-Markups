@@ -4,6 +4,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from random import randint
 import cred
 import binance_functions
+
 bot = Bot(token=cred.telegram_token)
 dp = Dispatcher(bot)
 
@@ -11,9 +12,9 @@ button1 = InlineKeyboardButton(text=" BTCUSDT ", callback_data="BTCUSDT")
 button2 = InlineKeyboardButton(text=" RAYUSDT", callback_data="RAYUSDT")
 button3 = InlineKeyboardButton(text=" DUSKUSDT", callback_data="DUSKUSDT")
 button4 = InlineKeyboardButton(text=" SKLUSDT", callback_data="SKLUSDT")
-button5 = InlineKeyboardButton(text=" Cancel", callback_data="id222")
+button5 = InlineKeyboardButton(text=" Cancel", callback_data="cancel")
 
-keyboard_inline = InlineKeyboardMarkup().add(button1, button2, button3, button4,button5)
+keyboard_inline = InlineKeyboardMarkup().add(button1, button2, button3, button4, button5)
 
 keyboard1 = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add("🪙 Select Symbols", "📑 Support")
 
@@ -28,29 +29,30 @@ async def welcome(message: types.Message):
     await message.reply("Cancelled ", reply_markup=keyboard1)
 
 
-@dp.callback_query_handler(text=["id222","BTCUSDT","RAYUSDT","DUSKUSDT","SKLUSDT"])
+@dp.callback_query_handler(text=["cancel", "BTCUSDT", "RAYUSDT", "DUSKUSDT", "SKLUSDT"])
 async def random_value(call: types.CallbackQuery):
     if call.data == "BTCUSDT":
-        res=binance_functions.get_historical_klines(call.data)
-        await call.message.answer(f"The changed percentage of {call.data} over the past week is {res[0]}%", reply_markup=keyboard1)
-        await call.message.reply_photo(res[1], reply_markup=keyboard1)
+        res = binance_functions.get_historical_klines(call.data)
+        await call.message.answer(f"The price changed percentage of {call.data} over the past week is {res[1]}%",
+                                  reply_markup=keyboard1)
+        await call.message.reply_photo(res[0], reply_markup=keyboard1)
 
     if call.data == "RAYUSDT":
         res = binance_functions.get_historical_klines(call.data)
-        await call.message.answer(f"The changed percentage of {call.data} over the past week is {res[0]}%",
+        await call.message.answer(f"The price changed percentage of {call.data} over the past week is {res[1]}%",
                                   reply_markup=keyboard1)
-        await call.message.reply_photo(res[1], reply_markup=keyboard1)
+        await call.message.reply_photo(res[0], reply_markup=keyboard1)
     if call.data == "DUSKUSDT":
         res = binance_functions.get_historical_klines(call.data)
-        await call.message.answer(f"The changed percentage of {call.data} over the past week is {res[0]}%",
+        await call.message.answer(f"The changed percentage of {call.data} over the past week is {res[1]}%",
                                   reply_markup=keyboard1)
-        await call.message.reply_photo(res[1], reply_markup=keyboard1)
+        await call.message.reply_photo(res[0], reply_markup=keyboard1)
     if call.data == "SKLUSDT":
         res = binance_functions.get_historical_klines(call.data)
-        await call.message.answer(f"The changed percentage of {call.data} over the past week is {res[0]}%",
+        await call.message.answer(f"The price changed percentage of {call.data} over the past week is {res[1]}%",
                                   reply_markup=keyboard1)
-        await call.message.reply_photo(res[1], reply_markup=keyboard1)
-    if call.data == "id222":
+        await call.message.reply_photo(res[0], reply_markup=keyboard1)
+    if call.data == "cancel":
         await call.message.answer("Cancelled", reply_markup=keyboard1)
     await call.answer()
 
