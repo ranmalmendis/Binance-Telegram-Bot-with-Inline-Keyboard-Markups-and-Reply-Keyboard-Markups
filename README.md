@@ -7,4 +7,4 @@
   
   Open the Telegram app on your pc and send /start command
   
-  Loom video - https://www.loom.com/share/50c4988ac8f64a09bb577da30789d712
+  Loom video - https://www.loom.com/share/0520a9ff16564adbaf00b5e24b6fc321
