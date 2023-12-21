@@ -1,5 +1,4 @@
 
-```markdown
 # Binance-Telegram Bot with Inline and Markup Keyboards
 
 ## Description
@@ -62,4 +61,4 @@ Open the Telegram app on your PC or mobile device. Search for your bot and send 
 - aiogram Documentation: https://docs.aiogram.dev/en/latest/
 
 
-```
+
